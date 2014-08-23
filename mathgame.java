@@ -47,12 +47,12 @@ class Question
 	private enum category {
 		ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION
 	}
-	private category cat;
+	private category qCategory;
 	/*--------------------------*/
 
 	public Question(){
 		generateQuestionOperands();
-		cat = category.ADDITION;	 // temp, will be replace with cat generator
+		qCategory = category.ADDITION;	 // temp, will be replace with cat generator
 		setQuestionString(getVal1(), getVal2(), getOperator());
 		setAnswerString();
 	}
@@ -79,9 +79,9 @@ class Question
 		this.questionString = "" + val1 + " " + op + " " + val2 + " = ";
 	}
 	public void setAnswerString(){
-		category cat = this.getCategory();
+		category qCategory = this.getCategory();
 		int ans = -99;
-		switch (cat){
+		switch (qCategory){
 			case ADDITION : 		ans = val1 + val2;
 									break;
 			case SUBTRACTION : 		ans = val1 - val2;
@@ -94,12 +94,12 @@ class Question
 		this.answerString = "" + ans;
 	}
 	public category getCategory(){
-		return cat;
+		return qCategory;
 	}
 	public char getOperator(){
-		category cat = this.getCategory();
+		category qCategory = this.getCategory();
 		char op = '+';
-		switch (cat){
+		switch (qCategory){
 			case ADDITION : op = '+';
 							break;
 			case SUBTRACTION : op = '-';
