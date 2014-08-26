@@ -1,38 +1,32 @@
 import java.util.Scanner;
 public class mathgame
 {
-	public static void main(String[] args)
+	//TODO comment
+	public static void main(String[] args) 
 	{
+		//Setting up input scanner and begin the ui with a message prompt
 		Scanner p = new Scanner(System.in);
+		Question q;
+		String inp;
+		int score = 0;
 		System.out.println("Type 'x' to quit");
-		Question q = new Question();
-		q.askQuestion();
-		String inp = p.next();
-		while(inp.charAt(0) != 'x'){
-			q.test("" + Integer.parseInt(inp)); //loop problem
+
+		while(true){
 			q = new Question();
 			q.askQuestion();
+
 			inp = p.next();
+
+			if(inp.charAt(0) == 'x'){
+				break;
+			}
+
+			score += q.test("" + Integer.parseInt(inp));
 		}
+
+		System.out.println("Well done, your score was: " + score + "!");
 		p.close();
 	}
-
-/*	public static void ask(){
-		Scanner s = new Scanner(System.in);
-		int range = 10;
-		int val1 = (int)(Math.random() * range);
-		int val2 = (int)(Math.random() * range);
-		System.out.print(val1 + " + " + val2 + " = ");
-
-		int inp = (int)s.nextInt();
-
-		if(val1 + val2 == inp){
-			System.out.println("Congrats!");
-		} else {
-			System.out.println("Boo!");
-		}
-		s.close();
-	}*/
 }
 
 class Question
@@ -57,12 +51,12 @@ class Question
 		setAnswerString();
 	}
 
-	public void test(String answer){
-		if(answerString.equals(answer)){
-			System.out.println("Congratulations!");
-		}else{
-			System.out.println("Booo!");
+	public int test(String answer){
+		if(!answerString.equals(answer)){
+			System.out.println(" ...Nope...");
+			return 0;
 		}
+		return 1;
 	}
 	public void askQuestion(){
 		System.out.print(getQuestion());
