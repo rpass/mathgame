@@ -1,1 +1,19 @@
 - Add scoring system with negative points and percentage grade.
+	- count correct answers
+	- count incorrect answers
+	- calculate accuracy (%)
+	- record speed of each question from posting to answering correctly
+- Add analytics engine
+ 	- record types of question
+ 	- sum scores on questions by their type
+ 	- report scores per type of question
+ 	- TYPES : single-digit-addition, double-digit, multi-digit, multi-operand, mixed-operator, etc.
+- Focus first of addition.
+- Add difficulty
+	- 2,3,4 digit operands
+	- random length digit operands (between 0 and 4)
+	- remove 0 from list of possible operands (or reduce frequency)
+	- decide whether single digit problems should have a single line format ( x + y = ___) and the larger (>= 2) digit problems should change their format to multi-line (x /n y +/n)?
+	- add multiple (> 2) operand problems
+- Keep a question up until answered correctly.
+
