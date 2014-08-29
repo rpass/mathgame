@@ -9,22 +9,31 @@ public class mathgame
 		Question q;
 		String inp;
 		int score = 0;
+		int negscore = 0;
 		System.out.println("Type 'x' to quit");
 
-		while(true){
-			q = new Question();
-			q.askQuestion();
-
-			inp = p.next();
-
-			if(inp.charAt(0) == 'x'){
-				break;
+		outer:
+			while(true){
+				q = new Question();
+				q.askQuestion();
+					while(true){
+						inp = p.next();
+						if(inp.charAt(0) == 'x'){
+							break outer;
+						}
+						if(q.test("" + Integer.parseInt(inp)) > 0){
+							score += 1;
+							break;
+						}
+						System.out.println("..nope..");
+						negscore++;
+						q.askQuestion();
+					}
 			}
 
-			score += q.test("" + Integer.parseInt(inp));
-		}
-
 		System.out.println("Well done, your score was: " + score + "!");
+		System.out.println("you got " + score + "/" + (score+negscore) + " correct!");
+		System.out.println("That is " + (score*100)/(score+negscore) + "%");
 		p.close();
 	}
 }
@@ -53,7 +62,6 @@ class Question
 
 	public int test(String answer){
 		if(!answerString.equals(answer)){
-			System.out.println(" ...Nope...");
 			return 0;
 		}
 		return 1;
