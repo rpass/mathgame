@@ -1,7 +1,7 @@
 - Add scoring system with negative points and percentage grade.
-	- count correct answers
-	- count incorrect answers
-	- calculate accuracy (%)
+DONE	- count correct answers
+DONE	- count incorrect attempts
+DONE	- calculate accuracy (%)
 	- record speed of each question from posting to answering correctly
 - Add analytics engine
  	- record types of question
@@ -15,5 +15,16 @@
 	- remove 0 from list of possible operands (or reduce frequency)
 	- decide whether single digit problems should have a single line format ( x + y = ___) and the larger (>= 2) digit problems should change their format to multi-line (x /n y +/n)?
 	- add multiple (> 2) operand problems
-- Keep a question up until answered correctly.
+DONE - Keep a question up until answered correctly.
+
+- Error checking
+	-Check and handle an exit before game begins (0/0 problem)
+
+- Expand to Ratios
+- Expand to statistics
+
+-------------------------------------
+GOAL:
+
+To improve my mental calculation and a more intuitive understanding of figures.
 

@@ -11,7 +11,7 @@ public class mathgame
 		int score = 0;
 		int negscore = 0;
 		System.out.println("Type 'x' to quit");
-
+		System.out.println((int)Math.pow(10,2));
 		outer:
 			while(true){
 				q = new Question();
@@ -30,10 +30,12 @@ public class mathgame
 						q.askQuestion();
 					}
 			}
-
+		int attempts = score + negscore;
+		if(attempts == 0)
+			attempts = 1;
 		System.out.println("Well done, your score was: " + score + "!");
-		System.out.println("you got " + score + "/" + (score+negscore) + " correct!");
-		System.out.println("That is " + (score*100)/(score+negscore) + "%");
+		System.out.println("you got " + score + "/" + (attempts) + " correct!");
+		System.out.println("That is " + (score*100)/(attempts) + "%");
 		p.close();
 	}
 }
@@ -45,6 +47,7 @@ class Question
 	private String answerString;
 	private int val1;
 	private int val2;
+	private int difficulty; //1 = single-digit operands, 2 = two-digit, etc.
 	/*private char op;*/ //not needed
 
 	private enum category {
@@ -54,6 +57,7 @@ class Question
 	/*--------------------------*/
 
 	public Question(){
+		this.difficulty = 1;
 		generateQuestionOperands();
 		qCategory = category.ADDITION;	 // temp, will be replace with cat generator
 		setQuestionString(getVal1(), getVal2(), getOperator());
@@ -124,10 +128,13 @@ class Question
 	public int getVal2(){
 		return val2;
 	}
+	public void setDifficulty(int difficulty){
+		this.difficulty = difficulty;
+	}
 	//The useful functions:
 	public void generateQuestionOperands(){
 		/*this.range = range;*/
-		int range = 10;
+		int range = (int)Math.pow(10, difficulty);
 		int val1 = (int)(Math.random() * range);
 		int val2 = (int)(Math.random() * range);
 		setVals(val1, val2);
