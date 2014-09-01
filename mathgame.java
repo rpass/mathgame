@@ -11,7 +11,13 @@ public class mathgame
 		int score = 0;
 		int negscore = 0;
 		System.out.println("Type 'x' to quit");
-		System.out.println((int)Math.pow(10,2));
+		
+		/*Testing*/
+/*		q = new Question();
+		for (int i = 0; i < 20 ; i++) {	
+			q.generateDifficulty();
+		}*/
+
 		outer:
 			while(true){
 				q = new Question();
@@ -48,20 +54,20 @@ class Question
 	private int val1;
 	private int val2;
 	private int difficulty; //1 = single-digit operands, 2 = two-digit, etc.
-	/*private char op;*/ //not needed
 
-	private enum category {
-		ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION
-	}
-	private category qCategory;
 	/*--------------------------*/
 
+	/*Constuctor*/
 	public Question(){
-		this.difficulty = 1;
+		generateDifficulty();
 		generateQuestionOperands();
-		qCategory = category.ADDITION;	 // temp, will be replace with cat generator
-		setQuestionString(getVal1(), getVal2(), getOperator());
+		setQuestionString(getVal1(), getVal2());
 		setAnswerString();
+	}
+
+	/*Methods*/
+	public void askQuestion(){
+		System.out.print(getQuestion());
 	}
 
 	public int test(String answer){
@@ -70,39 +76,82 @@ class Question
 		}
 		return 1;
 	}
-	public void askQuestion(){
-		System.out.print(getQuestion());
+	public void generateDifficulty(){
+		int difficulty = 1 + (int)(Math.random() * 4);
+		setDifficulty(difficulty);
+	}
+	public void generateQuestionOperands(){
+		int range = (int)Math.pow(10, getDifficulty());
+		int val1 = (int)(Math.random() * range);
+		int val2 = (int)(Math.random() * range);
+		setVals(val1, val2);
 	}
 
+	/*Getters & Setters*/
 
+	public void setQuestionString(int val1, int val2){
+		/*length of each value - needed for formatting*/
+		int len1 = String.valueOf(val1).length();
+		int len2 = String.valueOf(val2).length();
+
+		/**/
+		String padding1 = "";
+		String padding2 = "";
+
+		/*the length of the longer value*/
+		int maxlength = Math.max(len1, len2);
+		/*difference in length between values*/
+		int diflength = len1 - len2;
+		/*Create a padding string of x spaces (" ") where x is the difference in length between the input values*/
+		String padding = new String(new char[Math.abs(diflength)]).replace("\0", " ");
+		/*Compare lengths of values to decide where to put the padding*/
+		if(diflength < 0){
+			padding1 = padding;
+		}else if(diflength > 0){
+			padding2 = padding;
+		}
+		/*Set the question String with correct padding*/
+		this.questionString = padding1 + val1 + "\n" + padding2 + val2 + " +\n=";
+	}
+
+	public void setAnswerString(){
+		int ans = this.val1 + this.val2;
+		this.answerString = "" + ans;
+	}
+
+	public void setVals(int val1, int val2){
+		this.val1 = val1;
+		this.val2 = val2;
+	}
+
+	public void setDifficulty(int difficulty){
+		this.difficulty = difficulty;
+	}
+	public int getDifficulty(){
+		return difficulty;
+	}
+	public int getVal1(){
+		return val1;
+	}
+	public int getVal2(){
+		return val2;
+	}
 	public String getQuestion(){
 		return questionString;
 	}
 	public String getAnswer(){
 		return answerString;
 	}
-	public void setQuestionString(int val1, int val2, char op){
-		this.questionString = "" + val1 + " " + op + " " + val2 + " = ";
+}
+
+
+
+/*
+	private enum category {
+		ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION
 	}
-	public void setAnswerString(){
-		category qCategory = this.getCategory();
-		int ans = -99;
-		switch (qCategory){
-			case ADDITION : 		ans = val1 + val2;
-									break;
-			case SUBTRACTION : 		ans = val1 - val2;
-									break;
-			case MULTIPLICATION : 	ans = val1 * val2;
-									break;
-			case DIVISION : 		ans = val1 / val2;
-									break;
-		}
-		this.answerString = "" + ans;
-	}
-	public category getCategory(){
-		return qCategory;
-	}
-	public char getOperator(){
+
+		public char getOperator(){
 		category qCategory = this.getCategory();
 		char op = '+';
 		switch (qCategory){
@@ -118,28 +167,19 @@ class Question
 
 		return op;
 	}
-	public void setVals(int val1, int val2){
-		this.val1 = val1;
-		this.val2 = val2;
-	}
-	public int getVal1(){
-		return val1;
-	}
-	public int getVal2(){
-		return val2;
-	}
-	public void setDifficulty(int difficulty){
-		this.difficulty = difficulty;
-	}
-	//The useful functions:
-	public void generateQuestionOperands(){
-		/*this.range = range;*/
-		int range = (int)Math.pow(10, difficulty);
-		int val1 = (int)(Math.random() * range);
-		int val2 = (int)(Math.random() * range);
-		setVals(val1, val2);
-	}
-	public void generateOperator(){
 
-	}
-}
+		public void setAnswerString(){
+		category qCategory = this.getCategory();
+		int ans = -99;
+		switch (qCategory){
+			case ADDITION : 		ans = val1 + val2;
+									break;
+			case SUBTRACTION : 		ans = val1 - val2;
+									break;
+			case MULTIPLICATION : 	ans = val1 * val2;
+									break;
+			case DIVISION : 		ans = val1 / val2;
+									break;
+		}
+		this.answerString = "" + ans;
+	}*/
