@@ -8,7 +8,6 @@ DONE	- calculate accuracy (%)
  	- sum scores on questions by their type
  	- report scores per type of question
  	- TYPES : single-digit-addition, double-digit, multi-digit, multi-operand, mixed-operator, etc.
-- Focus first of addition.
 - Add difficulty
 DONE	- 2,3,4 digit operands
 DONE	- random length digit operands (between 0 and 4)
@@ -16,10 +15,19 @@ DONE	- random length digit operands (between 0 and 4)
 DONE	- decide whether single digit problems should have a single line format ( x + y = ___) and the larger (>= 2) digit problems should change their format to multi-line (x /n y +/n)?
 	- add multiple (> 2) operand problems
 DONE - Keep a question up until answered correctly.
+DONE	-allow user to set range of difficulty before hand
+DONE	-allow user to set random or no random difficulty at start
+
+
+- Formatting
+	-make it look pretty
 
 - Error checking
 	-Check and handle an exit before game begins (0/0 problem)
 
+- Expand
+	-Generalise the question class
+	-Create child classes for ratioQuestion, SubtractionQuestion, etc.
 - Expand to Ratios
 - Expand to statistics
 

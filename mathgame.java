@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 public class mathgame
 {
 	//TODO comment
@@ -10,6 +11,7 @@ public class mathgame
 		String inp;
 		int score = 0;
 		int negscore = 0;
+		int userdifficulty = 0;
 		System.out.println("Type 'x' to quit");
 		
 		/*Testing*/
@@ -18,9 +20,20 @@ public class mathgame
 			q.generateDifficulty();
 		}*/
 
+		System.out.println("Choose your difficulty");
+		System.out.println("1. Single-digit ops");
+		System.out.println("2. Double-digit ops");
+		System.out.println("3. etc.");
+		System.out.println("4. etc.");
+		System.out.println("0. Random length ops");
+
+		userdifficulty = p.nextInt();
+
+		System.out.println("you chose " + userdifficulty);
+
 		outer:
 			while(true){
-				q = new Question();
+				q = new Question(userdifficulty);
 				q.askQuestion();
 					while(true){
 						inp = p.next();
@@ -38,11 +51,14 @@ public class mathgame
 			}
 		int attempts = score + negscore;
 		if(attempts == 0)
-			attempts = 1;
-		System.out.println("Well done, your score was: " + score + "!");
-		System.out.println("you got " + score + "/" + (attempts) + " correct!");
-		System.out.println("That is " + (score*100)/(attempts) + "%");
-		p.close();
+			System.out.println("Goodbye.");
+		else{
+			System.out.println("Well done, your score was: " + score + "!");
+			System.out.println("you got " + score + "/" + (attempts) + " correct!");
+			System.out.println("That is " + (score*100)/(attempts) + "%");
+			
+		}
+		p.close();		
 	}
 }
 
@@ -58,8 +74,13 @@ class Question
 	/*--------------------------*/
 
 	/*Constuctor*/
-	public Question(){
-		generateDifficulty();
+	public Question(int difficulty){
+		if(difficulty == 0){
+			generateDifficulty();
+		}else{
+			setDifficulty(difficulty);
+		}
+
 		generateQuestionOperands();
 		setQuestionString(getVal1(), getVal2());
 		setAnswerString();
@@ -95,8 +116,8 @@ class Question
 		int len2 = String.valueOf(val2).length();
 
 		/**/
-		String padding1 = "";
-		String padding2 = "";
+		String padding1 = "     ";
+		String padding2 = "     ";
 
 		/*the length of the longer value*/
 		int maxlength = Math.max(len1, len2);
@@ -106,9 +127,9 @@ class Question
 		String padding = new String(new char[Math.abs(diflength)]).replace("\0", " ");
 		/*Compare lengths of values to decide where to put the padding*/
 		if(diflength < 0){
-			padding1 = padding;
+			padding1 += padding;
 		}else if(diflength > 0){
-			padding2 = padding;
+			padding2 += padding;
 		}
 		/*Set the question String with correct padding*/
 		this.questionString = padding1 + val1 + "\n" + padding2 + val2 + " +\n=";
