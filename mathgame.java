@@ -5,21 +5,21 @@ public class mathgame
 	//TODO comment
 	public static void main(String[] args) 
 	{
+		UI game = new UI();
+	}
+}
+class UI
+{
+	public UI(){
 		//Setting up input scanner and begin the ui with a message prompt
 		Scanner p = new Scanner(System.in);
-		Question q;
+		SubtractionQ q;
 		String inp;
 		int score = 0;
 		int negscore = 0;
 		int userdifficulty = 0;
-		System.out.println("Type 'x' to quit");
-		
-		/*Testing*/
-/*		q = new Question();
-		for (int i = 0; i < 20 ; i++) {	
-			q.generateDifficulty();
-		}*/
 
+		System.out.println("Type 'x' to quit");
 		System.out.println("Choose your difficulty");
 		System.out.println("1. Single-digit ops");
 		System.out.println("2. Double-digit ops");
@@ -29,11 +29,9 @@ public class mathgame
 
 		userdifficulty = p.nextInt();
 
-		System.out.println("you chose " + userdifficulty);
-
 		outer:
 			while(true){
-				q = new Question(userdifficulty);
+				q = new SubtractionQ(userdifficulty);
 				q.askQuestion();
 					while(true){
 						inp = p.next();
@@ -49,14 +47,14 @@ public class mathgame
 						q.askQuestion();
 					}
 			}
+
 		int attempts = score + negscore;
 		if(attempts == 0)
 			System.out.println("Goodbye.");
 		else{
 			System.out.println("Well done, your score was: " + score + "!");
 			System.out.println("you got " + score + "/" + (attempts) + " correct!");
-			System.out.println("That is " + (score*100)/(attempts) + "%");
-			
+			System.out.println("That is " + (score*100)/(attempts) + "%");			
 		}
 		p.close();		
 	}
@@ -70,17 +68,19 @@ class Question
 	private int val1;
 	private int val2;
 	private int difficulty; //1 = single-digit operands, 2 = two-digit, etc.
+	private char operator;
 
 	/*--------------------------*/
 
 	/*Constuctor*/
-	public Question(int difficulty){
+	public Question(int difficulty, char operator){
 		if(difficulty == 0){
 			generateDifficulty();
 		}else{
 			setDifficulty(difficulty);
 		}
 
+		setOperator(operator);
 		generateQuestionOperands();
 		setQuestionString(getVal1(), getVal2());
 		setAnswerString();
@@ -114,6 +114,7 @@ class Question
 		/*length of each value - needed for formatting*/
 		int len1 = String.valueOf(val1).length();
 		int len2 = String.valueOf(val2).length();
+		char operator = getOperator();
 
 		/**/
 		String padding1 = "     ";
@@ -132,12 +133,18 @@ class Question
 			padding2 += padding;
 		}
 		/*Set the question String with correct padding*/
-		this.questionString = padding1 + val1 + "\n" + padding2 + val2 + " +\n=";
+		this.questionString = padding1 + val1 + "\n" + padding2 + val2 + " " + operator + "\n=";
 	}
-
-	public void setAnswerString(){
+	public void setOperator(char operator){
+		this.operator = operator;
+	}
+	public String genAnswerString(){ /*MAybe this should be abstract*/
 		int ans = this.val1 + this.val2;
-		this.answerString = "" + ans;
+		String a = "" + ans;
+		return a;
+	}
+	public void setAnswerString(){ 
+		this.answerString = genAnswerString();
 	}
 
 	public void setVals(int val1, int val2){
@@ -163,9 +170,24 @@ class Question
 	public String getAnswer(){
 		return answerString;
 	}
+
+	public char getOperator(){
+		return operator;
+	}
 }
 
+class SubtractionQ extends Question{
 
+	public SubtractionQ(int difficulty){
+		super(difficulty, '-');
+	}
+
+	public String genAnswerString(){
+		int ans = getVal1() - getVal2();
+		String a = "" + ans;
+		return a;
+	}
+}
 
 /*
 	private enum category {
