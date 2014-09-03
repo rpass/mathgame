@@ -21,15 +21,17 @@ DONE	-allow user to set random or no random difficulty at start
 
 - Formatting
 	-make it look pretty
+	- clean up the UI class
 
 - Error checking
 	-Check and handle an exit before game begins (0/0 problem)
 
 - Expand
-	-Generalise the question class
+DONE-ish	-Generalise the question class
 	-Create child classes for ratioQuestion, SubtractionQuestion, etc.
 - Expand to Ratios
 - Expand to statistics
+done - Expand to subtraction
 
 -------------------------------------
 GOAL:
