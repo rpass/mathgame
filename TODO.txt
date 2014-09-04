@@ -2,6 +2,7 @@
 DONE	- count correct answers
 DONE	- count incorrect attempts
 DONE	- calculate accuracy (%)
+	- parse the input to be fair. (ex. .75 is seen as 0.75 and 0.12 or 0.13 is correct)
 	- record speed of each question from posting to answering correctly
 - Add analytics engine
  	- record types of question
@@ -32,6 +33,14 @@ DONE-ish	-Generalise the question class
 - Expand to Ratios
 - Expand to statistics
 done - Expand to subtraction
+	- Allow user to choose "mode" or add/sub/mult/div before starting ... 
+
+----
+Ratios
+----
+
+1) Setup a ratio question
+2) Setup margin of error correctness
 
 -------------------------------------
 GOAL:
