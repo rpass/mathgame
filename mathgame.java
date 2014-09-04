@@ -13,13 +13,32 @@ class UI
 	public UI(){
 		//Setting up input scanner and begin the ui with a message prompt
 		Scanner p = new Scanner(System.in);
-		SubtractionQ q;
+		Question q;
 		String inp;
 		int score = 0;
 		int negscore = 0;
+		int mode = 1;
 		int userdifficulty = 0;
 
-		System.out.println("Type 'x' to quit");
+/*		int a = 3;
+		int b = 2;
+		double ans = (double)a/b;
+		System.out.println("ans = " + ans);
+		int bns = (int)ans;
+		System.out.println("bns = " + bns);
+		double cns = Math.floor(ans);
+		int dns = (int)cns;
+		System.out.println("cns = " + cns + "\ndns = " + dns);*/
+
+		System.out.println("Choose your mode:");
+		System.out.println("1. Addition");
+		System.out.println("2. Subtraction");
+		System.out.println("3. Division");
+		System.out.println("4. Multiplication");
+		System.out.println("0. Random");
+
+		mode = p.nextInt();
+
 		System.out.println("Choose your difficulty");
 		System.out.println("1. Single-digit ops");
 		System.out.println("2. Double-digit ops");
@@ -29,16 +48,37 @@ class UI
 
 		userdifficulty = p.nextInt();
 
+		System.out.println("Type 'x' to quit");
 		outer:
 			while(true){
-				q = new SubtractionQ(userdifficulty);
+				/*switch(mode){
+					case 1:
+						q = new Question(userdifficulty, '+');
+						break;
+					case 2:
+						q = new SubtractionQ(userdifficulty);
+						break;
+					case 3:
+						q = new RatioQ(userdifficulty);
+						break;
+					case 4:
+						System.out.println("has not been implemented yet.");
+					case 0:
+						System.out.println("has not been implemented yet.");
+					default:
+						System.out.println("goodbye.");
+						break outer;
+				}*/
+
+				q = new RatioQ(userdifficulty);
 				q.askQuestion();
-					while(true){
+/*				System.out.println(q.genAnswerString());
+*/					while(true){
 						inp = p.next();
 						if(inp.charAt(0) == 'x'){
 							break outer;
 						}
-						if(q.test("" + Integer.parseInt(inp)) > 0){
+						if(q.test("" + inp) > 0){
 							score += 1;
 							break;
 						}
@@ -102,9 +142,9 @@ class Question
 		setDifficulty(difficulty);
 	}
 	public void generateQuestionOperands(){
-		int range = (int)Math.pow(10, getDifficulty());
-		int val1 = (int)(Math.random() * range);
-		int val2 = (int)(Math.random() * range);
+		int range = (int)Math.pow(10, getDifficulty()) - 1;
+		int val1 = 1 + (int)(Math.random() * range);
+		int val2 = 1 + (int)(Math.random() * range);
 		setVals(val1, val2);
 	}
 
@@ -176,6 +216,8 @@ class Question
 	}
 }
 
+
+/*Child classes for special question types*/
 class SubtractionQ extends Question{
 
 	public SubtractionQ(int difficulty){
@@ -184,6 +226,19 @@ class SubtractionQ extends Question{
 
 	public String genAnswerString(){
 		int ans = getVal1() - getVal2();
+		String a = "" + ans;
+		return a;
+	}
+}
+
+class RatioQ extends Question{
+	public RatioQ(int difficulty){
+		super(difficulty, '/');
+	}
+
+	public String genAnswerString(){
+		double ans = (double)getVal1() / getVal2();
+		ans = (Math.floor(ans * 100))/100;
 		String a = "" + ans;
 		return a;
 	}
