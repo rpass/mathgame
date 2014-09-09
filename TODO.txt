@@ -3,7 +3,11 @@ DONE	- count correct answers
 DONE	- count incorrect attempts
 DONE	- calculate accuracy (%)
 	- parse the input to be fair. (ex. .75 is seen as 0.75 and 0.12 or 0.13 is correct)
-	- record speed of each question from posting to answering correctly
+
+- Create timing feature
+done	- report speed of each question from posting to answering correctly
+	- use total time to report average time taken
+	- save each time and question for analytics
 - Add analytics engine
  	- record types of question
  	- sum scores on questions by their type
@@ -12,7 +16,7 @@ DONE	- calculate accuracy (%)
 - Add difficulty
 DONE	- 2,3,4 digit operands
 DONE	- random length digit operands (between 0 and 4)
-	- remove 0 from list of possible operands (or reduce frequency)
+done 	- remove 0 from list of possible operands (or reduce frequency)
 DONE	- decide whether single digit problems should have a single line format ( x + y = ___) and the larger (>= 2) digit problems should change their format to multi-line (x /n y +/n)?
 	- add multiple (> 2) operand problems
 DONE - Keep a question up until answered correctly.
@@ -21,11 +25,12 @@ DONE	-allow user to set random or no random difficulty at start
 
 
 - Formatting
-	-make it look pretty
+	- make it look pretty
 	- clean up the UI class
 
 - Error checking
 	-Check and handle an exit before game begins (0/0 problem)
+	- properly handle functions that are yet to be implemented
 
 - Expand
 DONE-ish	-Generalise the question class
