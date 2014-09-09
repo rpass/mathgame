@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+//used for timing
+import java.time.Instant;
+import java.time.temporal.Temporal;
+import java.time.temporal.ChronoUnit;
 public class mathgame
 {
 	//TODO comment
@@ -19,6 +23,10 @@ class UI
 		int negscore = 0;
 		int mode = 1;
 		int userdifficulty = 0;
+
+		Instant start, end; 
+		long gap;
+		long totGap = 0; //used for timing 
 
 /*		int a = 3;
 		int b = 2;
@@ -51,7 +59,7 @@ class UI
 		System.out.println("Type 'x' to quit");
 		outer:
 			while(true){
-				/*switch(mode){
+				switch(mode){
 					case 1:
 						q = new Question(userdifficulty, '+');
 						break;
@@ -63,23 +71,41 @@ class UI
 						break;
 					case 4:
 						System.out.println("has not been implemented yet.");
+						break outer;
 					case 0:
 						System.out.println("has not been implemented yet.");
+						break outer;
 					default:
 						System.out.println("goodbye.");
 						break outer;
-				}*/
+				}
 
-				q = new RatioQ(userdifficulty);
+				/*q = new RatioQ(userdifficulty);*/
 				q.askQuestion();
+				start = Instant.now();
 /*				System.out.println(q.genAnswerString());
 */					while(true){
+						
+/*						
+
+Instant previous, current, gap;
+...
+current = Instant.now();
+if (previous != null) {
+    gap = ChronoUnit.MILLIS.between(previous,current);
+}
+...*/					
+						
 						inp = p.next();
+						end = Instant.now();
 						if(inp.charAt(0) == 'x'){
 							break outer;
 						}
 						if(q.test("" + inp) > 0){
 							score += 1;
+							gap = ChronoUnit.MILLIS.between(start,end);
+							totGap += gap;
+							System.out.println(gap + "ms");
 							break;
 						}
 						System.out.println("..nope..");
@@ -94,7 +120,8 @@ class UI
 		else{
 			System.out.println("Well done, your score was: " + score + "!");
 			System.out.println("you got " + score + "/" + (attempts) + " correct!");
-			System.out.println("That is " + (score*100)/(attempts) + "%");			
+			System.out.println("That is " + (score*100)/(attempts) + "%");	
+			System.out.println("At an average time of " + totGap / score + "ms per correct answer.");		
 		}
 		p.close();		
 	}
