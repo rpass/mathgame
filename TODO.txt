@@ -3,16 +3,37 @@ DONE	- count correct answers
 DONE	- count incorrect attempts
 DONE	- calculate accuracy (%)
 	- parse the input to be fair. (ex. .75 is seen as 0.75 and 0.12 or 0.13 is correct)
+DONE	- score given as 10000-t where t is the time in ms taken to answer correctly
+DONE    - score for the game given as the sum of scores for each question answered correctly.
+	- Edit scoring so that score cannot be negative
+		- edit scoring for question to bottom out at 0
+	- Give answer to player after potential score for that q reaches 0.
+
 
 - Create timing feature
 done	- report speed of each question from posting to answering correctly
-	- use total time to report average time taken
+done	- use total time to report average time taken
 	- save each time and question for analytics
+
 - Add analytics engine
  	- record types of question
  	- sum scores on questions by their type
  	- report scores per type of question
  	- TYPES : single-digit-addition, double-digit, multi-digit, multi-operand, mixed-operator, etc.
+
+ 	- METRICS:
+ 		- Mode/operator eg. addition, subtraction, etc.
+ 		- Operand 1
+ 		- Operand 2
+ 		- Time taken to answer correctly (-1 if not completed)
+ 		- Number of attempts before correctly answered
+ 		- Datetime stamp
+ 		- Session ID (to understand the effects of the session on performance) eg. length of session = sum(time taken where session id = x)
+
+- Add persistant performance data tracking
+	- Open a connection with a mysql database
+	- Add a record into a table (category, val1, val2, time-taken, attempts, timestamp)
+
 - Add difficulty
 DONE	- 2,3,4 digit operands
 DONE	- random length digit operands (between 0 and 4)
