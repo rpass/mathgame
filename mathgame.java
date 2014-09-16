@@ -19,7 +19,8 @@ class UI
 		Scanner p = new Scanner(System.in);
 		Question q;
 		String inp;
-		int score = 0;
+		int qcount = 0; //number of questions seen/answered in the game
+		int score = 0; //score
 		int negscore = 0;
 		int mode = 1;
 		int userdifficulty = 0;
@@ -28,15 +29,7 @@ class UI
 		long gap;
 		long totGap = 0; //used for timing 
 
-/*		int a = 3;
-		int b = 2;
-		double ans = (double)a/b;
-		System.out.println("ans = " + ans);
-		int bns = (int)ans;
-		System.out.println("bns = " + bns);
-		double cns = Math.floor(ans);
-		int dns = (int)cns;
-		System.out.println("cns = " + cns + "\ndns = " + dns);*/
+		System.out.println("Evan here is a random number: " + (int)(Math.random()*10));
 
 		System.out.println("Choose your mode:");
 		System.out.println("1. Addition");
@@ -61,7 +54,7 @@ class UI
 			while(true){
 				switch(mode){
 					case 1:
-						q = new Question(userdifficulty, '+');
+						q = new AddQ(userdifficulty);
 						break;
 					case 2:
 						q = new SubtractionQ(userdifficulty);
@@ -70,8 +63,8 @@ class UI
 						q = new RatioQ(userdifficulty);
 						break;
 					case 4:
-						System.out.println("has not been implemented yet.");
-						break outer;
+						q = new MultiplicationQ(userdifficulty);
+						break;
 					case 0:
 						System.out.println("has not been implemented yet.");
 						break outer;
@@ -80,21 +73,9 @@ class UI
 						break outer;
 				}
 
-				/*q = new RatioQ(userdifficulty);*/
 				q.askQuestion();
 				start = Instant.now();
-/*				System.out.println(q.genAnswerString());
-*/					while(true){
-						
-/*						
-
-Instant previous, current, gap;
-...
-current = Instant.now();
-if (previous != null) {
-    gap = ChronoUnit.MILLIS.between(previous,current);
-}
-...*/					
+					while(true){				
 						
 						inp = p.next();
 						end = Instant.now();
@@ -102,9 +83,10 @@ if (previous != null) {
 							break outer;
 						}
 						if(q.test("" + inp) > 0){
-							score += 1;
+							qcount += 1;
 							gap = ChronoUnit.MILLIS.between(start,end);
 							totGap += gap;
+							score += 10000-gap;
 							System.out.println(gap + "ms");
 							break;
 						}
@@ -114,14 +96,14 @@ if (previous != null) {
 					}
 			}
 
-		int attempts = score + negscore;
+		int attempts = qcount + negscore;
 		if(attempts == 0)
 			System.out.println("Goodbye.");
 		else{
 			System.out.println("Well done, your score was: " + score + "!");
-			System.out.println("you got " + score + "/" + (attempts) + " correct!");
-			System.out.println("That is " + (score*100)/(attempts) + "%");	
-			System.out.println("At an average time of " + totGap / score + "ms per correct answer.");		
+			System.out.println("you got " + qcount + "/" + (attempts) + " correct!");
+			System.out.println("That is " + (qcount*100)/(attempts) + "%");	
+			System.out.println("At an average time of " + totGap / qcount + "ms per correct answer.");		
 		}
 		p.close();		
 	}
@@ -173,6 +155,19 @@ class Question
 		int val1 = 1 + (int)(Math.random() * range);
 		int val2 = 1 + (int)(Math.random() * range);
 		setVals(val1, val2);
+	}
+	//fake save Question method intended to save info about Question in database
+	public void saveQ(){
+		/*
+		mode:
+		System.out.println("mode:" + getOperator());
+		*/
+
+		//Operands
+		System.out.println("val1: " + getVal1());
+		System.out.println("val2: " + getVal2());
+
+		//
 	}
 
 	/*Getters & Setters*/
@@ -245,6 +240,16 @@ class Question
 
 
 /*Child classes for special question types*/
+class AddQ extends Question{
+	public AddQ(int difficulty){
+		super(difficulty, '+');
+	}
+	public String genAnswerString(){
+		int ans = getVal1() + getVal2();
+		String a = "" + ans;
+		return a;
+	}
+}
 class SubtractionQ extends Question{
 
 	public SubtractionQ(int difficulty){
@@ -266,6 +271,18 @@ class RatioQ extends Question{
 	public String genAnswerString(){
 		double ans = (double)getVal1() / getVal2();
 		ans = (Math.floor(ans * 100))/100;
+		String a = "" + ans;
+		return a;
+	}
+}
+
+class MultiplicationQ extends Question{
+	public MultiplicationQ(int difficulty){
+		super(difficulty, 'x');
+	}
+
+	public String genAnswerString(){
+		int ans = getVal1() * getVal2();
 		String a = "" + ans;
 		return a;
 	}
